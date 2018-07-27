@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "fractol.h"
+#include "../includes/fractol.h"
 
 void	init_mandelbrot(t_mlx *env, int part)
 {
@@ -28,7 +28,7 @@ void	init_mandelbrot(t_mlx *env, int part)
 		env->x = 0;
 		env->color = 0;
 	}
-	else
+	if (part == 2)
 	{
 		env->c_r = env->x / env->zoom_x + env->x1;
 		env->c_i = env->y / env->zoom_y + env->y1;

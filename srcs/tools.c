@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "fractol.h"
+#include "../includes/fractol.h"
 
 void	init(t_mlx *env)
 {
@@ -63,22 +63,30 @@ int		key_funct(int key, t_mlx *env)
 
 int		mouse_funct(int key, int x, int y, t_mlx *env)
 {
-	double h;
+	double tmp_x;
+	double tmp_y;
 
-	h = 0;
-	init_mandelbrot(env, 1);
+	tmp_x = x / env->zoom_x + env->x1;
+	tmp_y = y / env->zoom_y + env->y1;
+	//init_mandelbrot(env, 2);
+	//printf("x = %d\ny = %d\n", x, y);
+	//	printf("tmp->x = %f\ntmp->y = %f\n", tmp_x, tmp_y);
 	printf("key = %d\n", key);
 	if (key == 1)
 	{
-		//printf("x = %f\ny = %f\n", x, y);
-		env->x1 = x * 0.01 - h;
-		env->x2 = x * 0.01 + h;
-		env->y1 = y * 0.01 - h;
-		env->y2 = y * 0.01 + h;
-		env->zoom_x *= 2;
-		env->zoom_y *= 2;
-		env->iter_max *= 2;
 	}
+	if (key == 5)
+	{
+		env->zoom_x /= 1.1;
+		env->zoom_y /= 1.1;
+	}
+	if (key == 4)
+	{
+		env->zoom_x *= 1.1;
+		env->zoom_y *= 1.1;
+	}
+	env->x1 = tmp_x - (x / env->zoom_x);
+	env->y1 = tmp_y - (y / env->zoom_y);
 	exec_mandelbrot(env);
 	return (0);
 }
@@ -89,7 +97,7 @@ void	img_to_wdw(t_mlx *env)
 	mlx_put_image_to_window(env->mlx_ptr, env->wdw, env->img->img_ptr, 0, 0);
 	mlx_key_hook(env->wdw, key_funct, env);
 	mlx_mouse_hook(env->wdw, mouse_funct, env);
-	//mlx_loop_hook(env->mlx_ptr, mouse_funct, 0);
+//	mlx_loop_hook(env->mlx_ptr, mouse_funct, env);
 	mlx_loop(env->mlx_ptr);
 }
 

@@ -3,49 +3,57 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: arive-de <marvin@42.fr>                    +#+  +:+       +#+         #
+#    By: arive-de <arive-de@student.42.fr>              +#+  +:+       +#+     #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2017/01/09 16:10:03 by arive-de          #+#    #+#              #
-#    Updated: 2018/04/16 13:57:49 by arive-de         ###   ########.fr        #
+#    Created: 2018/06/01 14:05:46 by arive-de            #+#    #+#            #
+#    Updated: 2018/06/01 15:21:19 by arive-de         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME= fractol
+NAME			= fractol
+LIB				= libft/libft.a
+LIBMLX			= minilibx_macos/libmlx.a
+CC				= gcc
+CFLAGS			= -Wall -Wextra -Werror
+MLX				= -L minilibx_macos -lmlx -framework OpenGL -framework AppKit
+SRCS			= srcs/main.c \
+				  srcs/tools.c \
+				  srcs/mandelbrot.c \
+				  srcs/julia.c
+OBJS			= $(SRCS:.c=.o)
 
-SRC= ./srcs/main.c \
-	 ./srcs/mandelbrot.c \
-	 ./srcs/tools.c \
-	 ./srcs/julia.c
+all: $(NAME)
 
-OBJ= $(subst .c,.o, $(SRC))
+%.o:%.c
+	@$(CC) $(CFLAGS) -c $< -o $@
+	
+$(NAME): $(LIBMLX) $(LIB) $(OBJS)
+	@$(CC) $(CFLAGS) -o $(NAME) $(OBJS) -Llibft -lft $(MLX)
+	@echo "\033[35;1m  __                _        _" 
+	@echo "\033[35;1m / _|_ __ __ _  ___| |_ ___ | |"
+	@echo "\033[35;1m| |_| '__/ _\` |/ __| __/ _ \| |"
+	@echo "\033[35;1m|  _| | | (_| | (__| || (_) | |"
+	@echo "\033[35;1m|_| |_|  \__,_|\___|\__\___/|_|\033[0m\n\n"
+	@echo "FRACTOL COMPILED\t\033[0;32m✓\033[0m"
 
-CC= gcc
-CFLAGS= -Wall -Wextra -Werror
-MLX= -lmlx -framework OpenGL -framework Appkit
+$(LIBMLX):
+	@make -C minilibx_macos
+	@echo "MINILIBX COMPILED\t\033[0;32m✓\033[0m"
 
-LIBFT= ./libft/libft.a
-LIBINC= -I libft/
-
-FILH= includes/fractol.h
-INCDIR= -I includes/
-
-all: $(LIBFT) $(NAME)
-
-$(NAME): $(OBJ) $(FILH)
-	$(CC) $(CFLAGS) -o $(NAME) $(OBJ) $(LIBFT) $(MLX) $(INCDIR)
-
-%.o: %.c
-	$(CC) $(CFLAGS) $(INCDIR) -o $@ -c $<
-
-$(LIBFT):
-	make -C libft
+$(LIB):
+	@make -C libft
 
 clean:
-	/bin/rm -rf $(OBJ) $(OBJ2)
-	make -C libft clean
+	@/bin/rm -rf $(OBJS)
+	@echo "OBJECTS REMOVED\t\033[0;32m✓\033[0m"
+	@make -C minilibx_macos clean
+	@make -C libft clean
 
 fclean: clean
-	/bin/rm -rf $(NAME)
-	/bin/rm -rf ./libft/libft.a
+	@/bin/rm -rf $(NAME)
+	@/bin/rm -rf $(LIBMLX)
+	@make -C libft fclean
 
 re: fclean all
+
+.PHONY: clean fclean all re
