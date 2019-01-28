@@ -19,7 +19,8 @@ MLX				= -L minilibx_macos -lmlx -framework OpenGL -framework AppKit
 SRCS			= srcs/main.c \
 				  srcs/tools.c \
 				  srcs/mandelbrot.c \
-				  srcs/julia.c
+				  srcs/julia.c \
+				  srcs/fern.c
 OBJS			= $(SRCS:.c=.o)
 
 all: $(NAME)

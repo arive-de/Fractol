@@ -17,8 +17,8 @@
 # include "math.h"
 # include <stdio.h>
 
-# define WDW_WIDTH 800
-# define WDW_HEIGHT 600
+# define WDW_WIDTH 400
+# define WDW_HEIGHT 400
 
 typedef struct	s_img
 {
@@ -31,6 +31,7 @@ typedef struct	s_img
 
 typedef struct	s_mlx
 {
+	int fractal;
 	int x;
 	int y;
 	double x1;
@@ -50,7 +51,7 @@ typedef struct	s_mlx
 	int img_x;
 	int img_y;
 	int color;
-	void		*mlx_ptr;
+	void	*mlx_ptr;
 	void		*wdw;
 	t_img		*img;
 
@@ -63,20 +64,30 @@ typedef struct	s_mlx
 void	init(t_mlx *env);
 void	img_to_wdw(t_mlx *env);
 void	draw(int x, int y, int color, t_mlx *env);
+int		key_funct(int key, t_mlx *env);
+int		julia_funct(int x, int y, t_mlx *env);
+int		zoom_funct(int key, int x, int y, t_mlx *env);
 
 /*
  **		mandelbrot.c
 */
 
 void	init_mandelbrot(t_mlx *env, int part);
-void	exec_mandelbrot(t_mlx *env);
+void	exe_mandelbrot(t_mlx *env);
 
 /*
  **		julia.c
 */
 
 void	init_julia(t_mlx *env, int part);
-void	exec_julia(t_mlx *env);
+void	exe_julia(t_mlx *env);
+
+/*
+ **		fern.c
+*/
+
+void	init_fern(t_mlx *env);
+void	exe_fern(t_mlx *env);
 
 /*
  **		main.c

@@ -20,15 +20,19 @@ void	init_mandelbrot(t_mlx *env, int part)
 		env->x2 = 0.6;
 		env->y1 = -1.2;
 		env->y2 = 1.2;
-		env->zoom_x = 250;
-		env->zoom_y = 250;
+		env->c_r = env->x / env->zoom_x + env->x1;
+		env->c_i = env->y / env->zoom_y + env->y1;
+		env->z_r = 0;
+		env->z_i = 0;
+		env->i = 0;
+		env->zoom_x = 150;
+		env->zoom_y = 150;
 		env->iter_max = 250;
 		env->img_x = WDW_WIDTH;
 		env->img_y = WDW_HEIGHT;
-		env->x = 0;
-		env->color = 0;
+		env->color = 0x00ff66;
 	}
-	if (part == 2)
+	else if (part == 2)
 	{
 		env->c_r = env->x / env->zoom_x + env->x1;
 		env->c_i = env->y / env->zoom_y + env->y1;
@@ -38,8 +42,9 @@ void	init_mandelbrot(t_mlx *env, int part)
 	}
 }
 
-void	exec_mandelbrot(t_mlx *env)
+void	exe_mandelbrot(t_mlx *env)
 {
+	env->x = 0;
 	while (env->x < env->img_x)
 	{
 		env->y = 0;
@@ -55,10 +60,9 @@ void	exec_mandelbrot(t_mlx *env)
 				env->i++;
 			}
 			env->i == env->iter_max ? draw(env->x, env->y, env->color, env) :
-				draw(env->x, env->y, env->i * 255 / env->iter_max, env);
+				draw(env->x, env->y, env->i * env->color / env->iter_max, env);
 			env->y++;
 		}
 		env->x++;
 	}
-	img_to_wdw(env);
 }
