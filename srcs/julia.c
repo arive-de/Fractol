@@ -6,7 +6,7 @@
 /*   By: arive-de <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/16 13:58:10 by arive-de          #+#    #+#             */
-/*   Updated: 2018/04/16 15:41:28 by arive-de         ###   ########.fr       */
+/*   Updated: 2019/01/31 13:27:48 by arive-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,11 @@ void	init_julia(t_mlx *env, int part)
 {
 	if (part == 1)
 	{
-		env->x1 = -1.1;
-		env->x2 = 1;
-		env->y1 = -1.2;
-		env->y2 = 1.2;
-		env->iter_max = 100;
+		env->x1 = -2.2;
+		env->x2 = 1.8;
+		env->y1 = -2;
+		env->y2 = 1.9;
+		env->iter_max = 30;
 		env->img_x = WDW_WIDTH;
 		env->img_y = WDW_HEIGHT;
 		env->zoom_x = env->img_x / (env->x2 - env->x1);

@@ -1,28 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   mandelbrot.c                                       :+:      :+:    :+:   */
+/*   burningship.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: arive-de <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/04/16 13:58:15 by arive-de          #+#    #+#             */
-/*   Updated: 2019/01/31 13:29:44 by arive-de         ###   ########.fr       */
+/*   Created: 2019/01/31 11:13:23 by arive-de          #+#    #+#             */
+/*   Updated: 2019/01/31 11:46:00 by arive-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/fractol.h"
 
-void	init_mandelbrot(t_mlx *env, int part)
+void	init_burningship(t_mlx *env, int part)
 {
 	env->i = 0;
 	if (part == 1)
 	{
-		env->x1 = -3.0;
-		env->x2 = 2.6;
-		env->y1 = -2.0;
-		env->y2 = 1.2;
-		env->zoom_x = 150;
-		env->zoom_y = 150;
+		env->x1 = -2.2;
+		env->x2 = 1.0;
+		env->y1 = -2.5;
+		env->y2 = 1.0;
+		env->zoom_x = 220;
+		env->zoom_y = 220;
 		env->c_r = env->x / env->zoom_x + env->x1;
 		env->c_i = env->y / env->zoom_y + env->y1;
 		env->z_r = 0;
@@ -41,7 +41,7 @@ void	init_mandelbrot(t_mlx *env, int part)
 	}
 }
 
-void	exe_mandelbrot(t_mlx *env)
+void	exe_burningship(t_mlx *env)
 {
 	env->x = -1;
 	while (++env->x < env->img_x)
@@ -49,13 +49,13 @@ void	exe_mandelbrot(t_mlx *env)
 		env->y = 0;
 		while (env->y < env->img_y)
 		{
-			init_mandelbrot(env, 2);
+			init_burningship(env, 2);
 			while (env->z_r * env->z_r + env->z_i * env->z_i < 4
 					&& env->i < env->iter_max)
 			{
-				env->tmp = env->z_r;
-				env->z_r = env->z_r * env->z_r - env->z_i * env->z_i + env->c_r;
-				env->z_i = 2 * env->z_i * env->tmp + env->c_i;
+				env->tmp = env->z_r * env->z_r - env->z_i * env->z_i + env->c_r;
+				env->z_i = fabs(2 * env->z_i * env->z_r) + env->c_i;
+				env->z_r = env->tmp;
 				env->i++;
 			}
 			env->i == env->iter_max ? draw(env->x, env->y, env->color, env) :

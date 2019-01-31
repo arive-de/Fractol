@@ -6,7 +6,7 @@
 #    By: arive-de <arive-de@student.42.fr>              +#+  +:+       +#+     #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/06/01 14:05:46 by arive-de            #+#    #+#            #
-#    Updated: 2018/06/01 15:21:19 by arive-de         ###   ########.fr        #
+#    Updated: 2019/01/31 13:18:24 by arive-de         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,13 @@ SRCS			= srcs/main.c \
 				  srcs/tools.c \
 				  srcs/mandelbrot.c \
 				  srcs/julia.c \
-				  srcs/fern.c
+				  srcs/siegel.c \
+				  srcs/douady.c \
+				  srcs/burningship.c \
+				  srcs/lox.c \
+				  srcs/tricorne.c \
+				  srcs/octopus.c
+
 OBJS			= $(SRCS:.c=.o)
 
 all: $(NAME)

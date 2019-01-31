@@ -6,19 +6,25 @@
 /*   By: arive-de <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/16 13:58:19 by arive-de          #+#    #+#             */
-/*   Updated: 2018/04/25 16:56:33 by arive-de         ###   ########.fr       */
+/*   Updated: 2019/01/31 13:42:36 by arive-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/fractol.h"
 
+void	init(t_mlx *env)
+{
+	env->mlx_ptr = mlx_init();
+	env->wdw = mlx_new_window(env->mlx_ptr, WDW_WIDTH, WDW_HEIGHT, "Fractol");
+	img_to_wdw(env);
+}
 
 int		key_funct(int key, t_mlx *env)
 {
-	printf("keycode = %d\n", key);
 	if (key == 53)
 	{
-		//	TO DO FREE
+		free(env->img);
+		free(env);
 		exit(1);
 	}
 	if (key == 15)
@@ -34,8 +40,6 @@ int		key_funct(int key, t_mlx *env)
 	img_to_wdw(env);
 	return (0);
 }
-
-
 
 int		zoom_funct(int key, int x, int y, t_mlx *env)
 {

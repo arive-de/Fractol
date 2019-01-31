@@ -6,7 +6,7 @@
 #    By: arive-de <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/11/03 10:45:39 by arive-de          #+#    #+#              #
-#    Updated: 2017/06/08 13:56:45 by arive-de         ###   ########.fr        #
+#    Updated: 2019/01/29 17:21:27 by arive-de         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -99,17 +99,17 @@ FILH= libft.h
 all: $(NAME)
 
 $(NAME): $(OBJ) $(FILH)
-	$(CC) -c $(CFLAGS) $(SRC)
-	ar rc $(NAME) $(OBJ)
-	ranlib $(NAME)
+	@$(CC) -c $(CFLAGS) $(SRC)
+	@ar rc $(NAME) $(OBJ)
+	@ranlib $(NAME)
 
 %.o: %.c
-	$(CC) $(CFLAGS) -o $@ -c $<
+	@$(CC) $(CFLAGS) -o $@ -c $<
 
 clean:
-	rm -f $(OBJ)
+	@rm -f $(OBJ)
 
 fclean: clean
-	rm -f $(NAME)
+	@rm -f $(NAME)
 
 re: fclean all

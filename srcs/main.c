@@ -6,7 +6,7 @@
 /*   By: arive-de <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/10 13:22:00 by arive-de          #+#    #+#             */
-/*   Updated: 2018/04/17 11:46:42 by arive-de         ###   ########.fr       */
+/*   Updated: 2019/01/31 13:41:09 by arive-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,17 @@ void	launch_fractal(t_mlx *env)
 	else if (env->fractal == 2)
 		exe_julia(env);
 	else if (env->fractal == 3)
-		exe_fern(env);
+		exe_douady(env);
+	else if (env->fractal == 4)
+		exe_siegel(env);
+	else if (env->fractal == 5)
+		exe_lox(env);
+	else if (env->fractal == 6)
+		exe_burningship(env);
+	else if (env->fractal == 7)
+		exe_tricorne(env);
+	else if (env->fractal == 8)
+		exe_octopus(env);
 }
 
 void	img_to_wdw(t_mlx *env)
@@ -33,11 +43,33 @@ void	img_to_wdw(t_mlx *env)
 	mlx_destroy_image(env->mlx_ptr, env->img->img_ptr);
 }
 
-void	init(t_mlx *env)
+int		init_fractal2(t_mlx *env, char *str)
 {
-	env->mlx_ptr = mlx_init();
-	env->wdw = mlx_new_window(env->mlx_ptr, WDW_WIDTH, WDW_HEIGHT, "Fractol");
-	img_to_wdw(env);
+	if (ft_strcmp("lox", str) == 0 || env->fractal == 5)
+	{
+		init_lox(env, 1);
+		env->fractal = 5;
+	}
+	else if (ft_strcmp("burningship", str) == 0 || env->fractal == 6)
+	{
+		init_burningship(env, 1);
+		env->fractal = 6;
+	}
+	else if (ft_strcmp("tricorne", str) == 0 || env->fractal == 7)
+	{
+		init_tricorne(env, 1);
+		env->fractal = 7;
+	}
+	else if (ft_strcmp("octopus", str) == 0 || env->fractal == 8)
+	{
+		init_octopus(env, 1);
+		env->fractal = 8;
+	}
+	else
+	{
+		return (0);
+	}
+	return (1);
 }
 
 int		init_fractal(t_mlx *env, char *str)
@@ -52,12 +84,17 @@ int		init_fractal(t_mlx *env, char *str)
 		init_julia(env, 1);
 		env->fractal = 2;
 	}
-	else if (ft_strcmp("fern", str) == 0 || env->fractal == 3)
+	else if (ft_strcmp("douady", str) == 0 || env->fractal == 3)
 	{
-		init_fern(env);
+		init_douady(env, 1);
 		env->fractal = 3;
 	}
-	else
+	else if (ft_strcmp("siegel", str) == 0 || env->fractal == 4)
+	{
+		init_siegel(env, 1);
+		env->fractal = 4;
+	}
+	else if (init_fractal2(env, str) == 0)
 		return (0);
 	return (1);
 }
@@ -71,12 +108,17 @@ int		main(int argc, char **argv)
 		return (0);
 	if (argc != 2 || init_fractal(env, argv[1]) != 1)
 	{
-		printf("TODO : print usage\n"); // FREE
+		ft_putstr("./fractol mandelbrot\n./fractol julia\n./fractol lox\n");
+		ft_putstr("./fractol siegel\n./fractol douady\n");
+		ft_putstr("./fractol octopus\n./fractol tricorne\n");
+		ft_putstr("./fractol burningship\n");
+		free(env->img);
+		free(env);
 		return (0);
 	}
 	init(env);
 	mlx_hook(env->wdw, 2, 3, key_funct, env);
-	mlx_hook(env->wdw, 6, 7, julia_funct, env); //mouse changing for julia
+	mlx_hook(env->wdw, 6, 7, julia_funct, env);
 	mlx_mouse_hook(env->wdw, zoom_funct, env);
 	mlx_loop(env->mlx_ptr);
 	return (0);
